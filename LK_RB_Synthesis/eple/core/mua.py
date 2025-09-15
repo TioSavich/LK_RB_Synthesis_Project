@@ -109,31 +109,89 @@ class Synthesizer:
 
         return mud
 
+def _wrap_label(label, max_width=20):
+    """Wraps a label into multiple lines if it's too long."""
+    words = label.split(' ')
+    lines = []
+    current_line = ""
+    for word in words:
+        if len(current_line) + len(word) + 1 > max_width:
+            lines.append(current_line)
+            current_line = word
+        else:
+            if current_line:
+                current_line += " "
+            current_line += word
+    if current_line:
+        lines.append(current_line)
+    return '\\n'.join(lines)
+
 def visualize_mud(mud, output_path):
+    """
+    Generates a Graphviz .gv file from a MeaningUseDiagram object,
+    following the specific Brandomian MUD visual conventions.
+    """
     dot = Digraph(comment=mud.name)
-    dot.attr('node', fontname='Helvetica', fontsize='10')
-    dot.attr('edge', fontname='Helvetica', fontsize='8')
+    dot.attr('graph', rankdir='TB', splines='ortho')
+    dot.attr('node', fontname='Serif', fontsize='12')
+    dot.attr('edge', fontname='Serif', fontsize='10', penwidth='2.0', arrowhead='stealth')
 
     node_types = nx.get_node_attributes(mud.graph, 'type')
     
-    for node in mud.graph.nodes():
-        ntype = node_types.get(node, "Unknown")
-        label = node.replace('P_Strategy_', '').replace('P_Embodied_', '').replace('V_', '').replace('_', ' ')
+    for node_name in mud.graph.nodes():
+        ntype = node_types.get(node_name, "Unknown")
+
+        # Sanitize and format the label text
+        clean_label = node_name.replace('P_Strategy_', '').replace('P_Embodied_', '').replace('V_', '').replace('_', ' ')
+        wrapped_label = _wrap_label(clean_label)
 
         if ntype == "Practice":
-            dot.node(node, label=f"P: {label}", shape='ellipse')
+            # Darker gray, filled rectangles with rounded corners
+            dot.node(node_name, label=f"P_{{{wrapped_label}}}", shape='box', style='filled,rounded',
+                     fillcolor='gray70', fontcolor='white')
         elif ntype == "Vocabulary":
-            dot.node(node, label=f"V: {label}", shape='box', style='rounded')
+            # Light gray, filled ellipses
+            dot.node(node_name, label=f"V_{{{wrapped_label}}}", shape='ellipse', style='filled',
+                     fillcolor='gray90')
         elif ntype == "Metaphor":
-            dot.node(node, label=f"M: {label}", shape='box', style='rounded,dashed')
+            # This is not in the spec, but we'll make it distinct
+            # Using a dashed box for the metaphor concept itself
+            dot.node(node_name, label=wrapped_label, shape='box', style='dashed')
         else:
-            dot.node(node, label=label)
+            # Default for any other node type
+            dot.node(node_name, label=wrapped_label)
 
     edge_labels = nx.get_edge_attributes(mud.graph, 'type')
+    edge_counter = 1
+    palgel_counter = 1
+
     for source, target in mud.graph.edges():
-        label = edge_labels.get((source, target), "")
-        style = 'dashed' if label in ["Mediated by", "Structures"] else 'solid'
-        dot.edge(source, target, label=label, style=style)
+        relation_type = edge_labels.get((source, target), "")
+        label = f"{edge_counter}: {relation_type}"
+
+        # Handle Algorithmic Elaboration as a special case
+        if "PP-Sufficiency (Elaboration)" in relation_type:
+            # 1. Create the PAlgEl node
+            palgel_name = f"PAlgEl_{palgel_counter}"
+            palgel_label = _wrap_label(f"PAlgEl {edge_counter}: PP-suff")
+            dot.node(palgel_name, label=palgel_label, shape='box', style='filled',
+                     fillcolor='lightgray', fontcolor='black')
+            palgel_counter += 1
+
+            # 2. Draw edges to and from the PAlgEl node to simulate it sitting on the arrow
+            dot.edge(source, palgel_name, arrowhead='none', style='solid', color='black')
+            dot.edge(palgel_name, target, style='solid', color='black')
+            edge_counter += 1
+            continue
+
+        # Handle other relation types
+        is_resultant = "Mediated by" in relation_type or "Structures" in relation_type
+
+        style = 'dashed' if is_resultant else 'solid'
+        color = 'gray' if is_resultant else 'black'
+
+        dot.edge(source, target, label=label, style=style, color=color)
+        edge_counter += 1
 
     # Save the .gv source file without rendering the PDF
     with open(output_path, 'w') as f:
