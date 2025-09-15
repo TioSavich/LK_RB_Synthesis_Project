@@ -20,6 +20,7 @@ class SlidingAutomaton(BaseAutomaton):
     def metadata(self) -> StrategyMetadata:
         """Provides MUA metadata for the Sliding strategy."""
         return StrategyMetadata(
+            strategy_id="SAR_SUB_Sliding",
             strategy_name="Sliding to Make Bases (Constant Difference)",
             description=(
                 "Simulates the 'Sliding' (Constant Difference) strategy for subtraction. "

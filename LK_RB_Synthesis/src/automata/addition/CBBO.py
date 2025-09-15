@@ -19,6 +19,7 @@ class CBBOAutomaton(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="CBBO_Addition",
             strategy_name="CBBO (Counting Back by Bases and Ones)",
             description=(
                 "Simulates a subtraction strategy where the second number (B) is decomposed into its base-ten and ones components. "

@@ -17,6 +17,7 @@ class COBOAutomaton(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="SAR_ADD_COBO",
             strategy_name="COBO (Counting On by Bases and Ones)",
             description=(
                 "Simulates an addition strategy where the second number (B) is decomposed into its base-ten and ones components. "

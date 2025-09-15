@@ -77,7 +77,7 @@
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "CO",
+                "id": "P_CountingOn",
                 "description": "The ability to perform basic addition, which might be used to solve the final, simplified problem (e.g., `30 + 5`)."
             },
             {
@@ -85,7 +85,7 @@
                 "description": "A robust understanding of the base-10 system, including identifying the \"next base\" for a given number."
             },
             {
-                "id": "SD",
+                "id": "P_NumberDecomposition",
                 "description": "The ability to break a number into two or more parts (e.g., seeing 7 as 2 + 5)."
             }
         ],
@@ -122,7 +122,7 @@
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "CO",
+                "id": "P_CountingOn",
                 "description": "Needed to perform the final step of adding the ones."
             },
             {
@@ -198,11 +198,11 @@
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "CO",
+                "id": "P_BasicAddition",
                 "description": "Needed to add the chunks together."
             },
             {
-                "id": "SD",
+                "id": "P_NumberDecomposition",
                 "description": "The ability to break a number into parts (e.g., 34 is 30 and 4)."
             },
             {
@@ -236,11 +236,11 @@
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "SC",
+                "id": "P_BasicSubtraction",
                 "description": "Needed to subtract the individual chunks."
             },
             {
-                "id": "SD",
+                "id": "P_NumberDecomposition",
                 "description": "The ability to break the subtrahend into parts."
             },
             {
@@ -269,12 +269,12 @@
         "visualization_hints": []
     },
     {
-        "strategy_id": "SC_1",
+        "strategy_id": "SC",
         "strategy_name": "Subtraction Chunking (Forwards from Part)",
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "CO",
+                "id": "P_Addition/CountingOn",
                 "description": "The core of the strategy is addition."
             },
             {
@@ -282,7 +282,7 @@
                 "description": "A conceptual understanding that subtraction and addition are inverse operations."
             },
             {
-                "id": "SD",
+                "id": "P_NumberDecomposition",
                 "description": "To make strategic jumps (e.g., knowing to jump to the next ten)."
             }
         ],
@@ -307,12 +307,12 @@
         "visualization_hints": []
     },
     {
-        "strategy_id": "SC_2",
+        "strategy_id": "SC",
         "strategy_name": "Subtraction Chunking (Backwards to Part)",
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "SC",
+                "id": "P_BasicSubtraction",
                 "description": "Needed to perform the jumps."
             },
             {
@@ -345,7 +345,7 @@
         "visualization_hints": []
     },
     {
-        "strategy_id": "SC_3",
+        "strategy_id": "SC",
         "strategy_name": "Subtraction COBO (Missing Addend)",
         "deployed_vocabulary": "",
         "pp_necessities": [
@@ -362,7 +362,7 @@
                 "description": "The ability to add 10 to any number."
             },
             {
-                "id": "CO",
+                "id": "P_CountingOn",
                 "description": "To handle the final \"ones\" jumps."
             }
         ],
@@ -484,7 +484,7 @@
                 "description": "To round one of the factors to a nearby base."
             },
             {
-                "id": "IDRD",
+                "id": "P_DistributivePrinciple",
                 "description": "A conceptual understanding that multiplication distributes over addition/subtraction."
             }
         ],
@@ -522,7 +522,7 @@
                 "description": "To deal out one item at a time to each group."
             },
             {
-                "id": "CO",
+                "id": "P_Counting",
                 "description": "To count the items in one of the final groups to determine the answer."
             },
             {
@@ -564,15 +564,15 @@
                 "description": "To recognize \"friendly\" numbers and calculate the partial quotients."
             },
             {
-                "id": "SD",
+                "id": "P_NumberDecomposition",
                 "description": "The ability to break a number into parts."
             },
             {
-                "id": "IDRD",
+                "id": "P_DistributivePrinciple",
                 "description": "A conceptual understanding that division distributes over addition."
             },
             {
-                "id": "CO",
+                "id": "P_BasicAddition",
                 "description": "To sum the partial quotients."
             }
         ],
@@ -602,11 +602,11 @@
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "CO",
+                "id": "P_BasicAddition",
                 "description": "To perform the repeated additions of the divisor `G`."
             },
             {
-                "id": "CO",
+                "id": "P_Counting",
                 "description": "To count the number of iterations/groups."
             },
             {
@@ -640,7 +640,7 @@
         "deployed_vocabulary": "",
         "pp_necessities": [
             {
-                "id": "SD",
+                "id": "P_PlaceValueDecomposition",
                 "description": "To break the dividend into its base-10 components."
             },
             {

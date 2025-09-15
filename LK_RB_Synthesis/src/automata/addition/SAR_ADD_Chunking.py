@@ -19,6 +19,7 @@ class ChunkingAutomaton(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="SAR_ADD_Chunking",
             strategy_name="Chunking by Bases and Ones",
             description=(
                 "Simulates an addition strategy where the second number (B) is decomposed into its base-ten and ones components. "

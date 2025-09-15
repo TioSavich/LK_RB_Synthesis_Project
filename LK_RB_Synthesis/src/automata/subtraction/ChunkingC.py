@@ -19,6 +19,7 @@ class ChunkingAutomatonC(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="ChunkingC_Subtraction",
             strategy_name="Chunking C (Backwards to Part)",
             description="Starts at the minuend (M) and subtracts in strategic chunks to reach the subtrahend (S). The result is the total distance subtracted. This is another 'missing addend' variant.",
             metaphors=[

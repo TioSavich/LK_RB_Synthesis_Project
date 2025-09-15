@@ -19,6 +19,7 @@ class CBBOAutomaton(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="CBBO_Subtraction",
             strategy_name="CBBO (Counting Back - Take Away)",
             description=(
                 "Starts at the minuend (M) and counts back by the amount of the subtrahend (S), "

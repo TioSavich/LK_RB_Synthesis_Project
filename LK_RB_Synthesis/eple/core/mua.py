@@ -224,3 +224,80 @@ class PV_Sufficiency(MeaningUseRelation):
 class AlgorithmicElaboration(PP_Sufficiency):
     """A specific type of PP-Sufficiency that represents an algorithmic elaboration."""
     pass
+
+
+def find_pragmatic_metavocabulary(V_base, P_base, all_practices, all_murs):
+    """
+    Finds all vocabularies that serve as pragmatic metavocabularies for V_base
+    relative to P_base. A pragmatic metavocabulary allows specification of
+    practices that elaborate P_base.
+    
+    Returns a set of Vocabulary objects that qualify as metavocabularies.
+    """
+    metavocabularies = set()
+    
+    for V_candidate in [p.vocabulary for p in all_practices if p.vocabulary]:
+        if V_candidate == V_base:
+            continue
+            
+        # Check if V_candidate can specify elaborations of P_base
+        can_specify_elaborations = False
+        for mur in all_murs:
+            if isinstance(mur, PP_Sufficiency) and mur.P_base == P_base:
+                # Check if V_candidate contains predicates that can describe
+                # the elaboration mur.P_elaborated
+                if _vocabulary_can_describe_practice(V_candidate, mur.P_elaborated):
+                    can_specify_elaborations = True
+                    break
+        
+        if can_specify_elaborations:
+            metavocabularies.add(V_candidate)
+    
+    return metavocabularies
+
+
+def is_LX(p_base, p_elaborated, v_base, v_elaborated, all_practices, all_murs):
+    """
+    Checks if (P_elaborated, V_elaborated) stands in an LX relation to (P_base, V_base).
+    This means:
+    1. P_elaborated is an elaboration of P_base (via PP_Sufficiency)
+    2. V_elaborated is a pragmatic metavocabulary for V_base relative to P_base
+    3. V_elaborated explicates what P_elaborated makes explicit from P_base
+    
+    Returns True if the LX relation holds.
+    """
+    # Check 1: Is there a PP_Sufficiency relation from P_base to P_elaborated?
+    has_pp_sufficiency = any(
+        isinstance(mur, PP_Sufficiency) and mur.P_base == p_base and mur.P_elaborated == p_elaborated
+        for mur in all_murs
+    )
+    
+    if not has_pp_sufficiency:
+        return False
+    
+    # Check 2: Is V_elaborated a pragmatic metavocabulary for V_base?
+    pv_meta = find_pragmatic_metavocabulary(v_base, p_base, all_practices, all_murs)
+    if v_elaborated not in pv_meta:
+        return False
+    
+    # Check 3: Does V_elaborated explicate the structure that P_elaborated makes explicit?
+    # This is a more complex check - for now, we'll assume that if the above conditions
+    # hold and V_elaborated is different from V_base (has different predicates), it's an explication
+    if v_elaborated.predicates == v_base.predicates:
+        return False
+    
+    return True
+
+
+def _vocabulary_can_describe_practice(vocabulary, practice):
+    """
+    Helper function to check if a vocabulary contains predicates that can
+    describe the structure of a practice.
+    
+    This is a simplified implementation - in practice, this would involve
+    checking if the vocabulary's predicates can express the practice's
+    inferential structure.
+    """
+    # For now, assume that vocabularies with more predicates can describe
+    # more complex practices
+    return len(vocabulary.predicates) > 0

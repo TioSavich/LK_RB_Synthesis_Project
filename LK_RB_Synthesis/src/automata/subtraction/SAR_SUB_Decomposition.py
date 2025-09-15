@@ -18,6 +18,7 @@ class DecompositionAutomaton(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="SAR_SUB_Decomposition",
             strategy_name="Decomposition (Borrowing)",
             description=(
                 "Simulates the traditional 'borrowing' or 'decomposition' algorithm for subtraction. "

@@ -19,6 +19,7 @@ class COBOAutomaton(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="COBO_Subtraction",
             strategy_name="COBO (Counting On - Missing Addend)",
             description=(
                 "Starts at the subtrahend (S) and counts up to the minuend (M), first by bases and then by ones. "

@@ -15,10 +15,29 @@ class BaseAutomaton(ABC):
         self.registers = {} # Flexible dictionary for internal registers
 
     @property
-    @abstractmethod
     def metadata(self) -> StrategyMetadata:
         """Must be implemented by subclasses to provide MUA metadata."""
-        pass
+        # Check if we have an overridden metadata object
+        if hasattr(self, '_metadata_obj'):
+            return self._metadata_obj
+
+        # Try to get metadata from subclass - handle both patterns
+        try:
+            # Check if subclass has defined its own metadata property
+            metadata_attr = getattr(type(self), 'metadata', None)
+            if metadata_attr and hasattr(metadata_attr, 'fget') and metadata_attr.fget != BaseAutomaton.metadata.fget:
+                # Subclass has its own metadata property implementation
+                return metadata_attr.fget(self)
+            else:
+                # Try _get_metadata method
+                return self._get_metadata()
+        except (AttributeError, NotImplementedError):
+            # Fallback for existing subclasses
+            raise NotImplementedError("Subclasses must implement metadata property or _get_metadata method")
+
+    def _get_metadata(self) -> StrategyMetadata:
+        """Default implementation - subclasses should override this or the metadata property."""
+        raise NotImplementedError("Subclasses must implement _get_metadata method")
 
     def _record_history(self, interpretation, highlight=False):
         # This method now automatically captures the state of all registers
@@ -71,8 +90,14 @@ class BaseAutomaton(ABC):
 
     def export_trace_json(self):
         """Exports the execution history and metadata for visualization and analysis."""
+        # Custom JSON encoder to handle dataclass objects
+        def custom_encoder(obj):
+            if hasattr(obj, '__dict__'):
+                return obj.__dict__
+            raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
+
         # Note: Serialization might require handling dataclass conversion if not using Python 3.10+
         return json.dumps({
-            "metadata": self.metadata.__dict__,
+            "metadata": self.metadata.__dict__ if hasattr(self.metadata, '__dict__') else str(self.metadata),
             "history": self.history
-        }, indent=4)
+        }, indent=4, default=custom_encoder)

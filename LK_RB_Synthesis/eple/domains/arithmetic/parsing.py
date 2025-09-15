@@ -7,22 +7,22 @@ def parse_strategies(raw_dir, output_path):
     # It maps keywords from strategy names/descriptions to a conceptual metaphor.
     # This is a simplified approach for demonstration.
     metaphor_mapping = {
-        "counting on": "Arithmetic is Motion Along a Path",
-        "cobo": "Arithmetic is Motion Along a Path",
-        "rounding": "Arithmetic is Motion Along a Path",
-        "sliding": "Arithmetic is Motion Along a Path",
-        "chunking": "Arithmetic is Object Construction",
-        "decomposition": "Arithmetic is Object Construction",
-        "distributive": "Arithmetic is Object Construction",
-        "commutative": "Arithmetic is Object Collection",
-        "coordinating two counts": "Arithmetic is Object Collection",
-        "dealing by ones": "Arithmetic is Object Collection",
-        "strategic counting": "Arithmetic is Object Collection",
-        "c2c": "Arithmetic is Object Collection",
-        "rmb": "Arithmetic is Object Construction",
-        "cgob": "Arithmetic is Object Construction",
-        "idp": "Arithmetic is Object Construction",
-        "abao": "Arithmetic is Object Collection",
+        "counting on": "Arithmetic Is Motion Along a Path",
+        "cobo": "Arithmetic Is Motion Along a Path",
+        "rounding": "Arithmetic Is Motion Along a Path",
+        "sliding": "Arithmetic Is Motion Along a Path",
+        "chunking": "Arithmetic Is Object Construction",
+        "decomposition": "Arithmetic Is Object Construction",
+        "distributive": "Arithmetic Is Object Construction",
+        "commutative": "Arithmetic Is Object Collection",
+        "coordinating two counts": "Arithmetic Is Object Collection",
+        "dealing by ones": "Arithmetic Is Object Collection",
+        "strategic counting": "Arithmetic Is Object Collection",
+        "c2c": "Arithmetic Is Object Collection",
+        "rmb": "Arithmetic Is Object Construction",
+        "cgob": "Arithmetic Is Object Construction",
+        "idp": "Arithmetic Is Object Construction",
+        "abao": "Arithmetic Is Object Collection",
     }
 
     strategies = []

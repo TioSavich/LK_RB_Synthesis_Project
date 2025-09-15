@@ -18,6 +18,7 @@ class ChunkingAutomatonA(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="ChunkingA_Subtraction",
             strategy_name="Chunking A (Backwards by Part)",
             description="Starts at the minuend (M) and subtracts chunks of the subtrahend (S) based on its place value decomposition.",
             metaphors=[

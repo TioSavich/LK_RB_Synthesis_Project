@@ -18,6 +18,7 @@ class RMBAutomaton(BaseAutomaton):
     @property
     def metadata(self) -> StrategyMetadata:
         return StrategyMetadata(
+            strategy_id="SAR_ADD_RMB",
             strategy_name="RMB (Rearranging to Make Bases)",
             description=(
                 "Simulates an addition strategy where one number is adjusted to a multiple of the base by 'borrowing' from the other. "
