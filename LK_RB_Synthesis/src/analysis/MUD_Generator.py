@@ -11,7 +11,7 @@ class Practice:
         self.description = description
 
 class StrategyMetadata:
-    def __init__(self, strategy_id, strategy_name, deployed_vocabulary, pp_necessities, pp_sufficiencies_alg_elaboration, lx_relations):
+    def __init__(self, strategy_id, strategy_name, deployed_vocabulary, pp_necessities, pp_sufficiencies_alg_elaboration, lx_relations, **kwargs):
         self.strategy_id = strategy_id
         self.strategy_name = strategy_name
         self.deployed_vocabulary = deployed_vocabulary
@@ -66,23 +66,64 @@ def generate_structural_MUD(meta: StrategyMetadata):
 
     return dot
 
+def _wrap_label(label, max_width=20):
+    """Wraps a label into multiple lines if it's too long."""
+    words = label.split(' ')
+    lines = []
+    current_line = ""
+    for word in words:
+        if len(current_line) + len(word) + 1 > max_width:
+            lines.append(current_line)
+            current_line = word
+        else:
+            if current_line:
+                current_line += " "
+            current_line += word
+    if current_line:
+        lines.append(current_line)
+    return '\\n'.join(lines)
+
 def generate_LX_Hierarchy(metadata_list: List[StrategyMetadata]):
-    """Visualizes the LX relationships (VV-Resultance) between strategies."""
-    dot = graphviz.Digraph(comment='LX Hierarchy')
-    dot.attr(rankdir='BT') # Bottom to Top layout
+    """
+    Visualizes the full dependency graph of strategies, highlighting LX relationships.
+    This version adheres to the specified Brandomian MUD visual conventions.
+    """
+    dot = graphviz.Digraph(comment='Full Strategy Dependency Hierarchy')
+    dot.attr('graph', rankdir='TB', splines='ortho', label='Full Strategy Dependency Hierarchy', labelloc='t', fontsize='16')
+    dot.attr('node', fontname='Serif', fontsize='12')
+    dot.attr('edge', fontname='Serif', fontsize='10', penwidth='2.0', arrowhead='stealth')
 
-    # Add nodes
     id_map = {meta.strategy_id: meta for meta in metadata_list}
-    for meta in metadata_list:
-        dot.node(meta.strategy_id, label=meta.strategy_name, shape='box')
 
-    # Add edges
+    # Add all practices (strategies) as nodes first
     for meta in metadata_list:
+        wrapped_label = _wrap_label(meta.strategy_name)
+        dot.node(meta.strategy_id, label=f"P_{{{wrapped_label}}}", shape='box', style='filled,rounded',
+                 fillcolor='gray70', fontcolor='white')
+
+    edge_counter = 1
+    # Add edges for both PP-Necessity and LX relations
+    for meta in metadata_list:
+        # 1. Add PP-Necessity edges (basic relations)
+        for prereq in meta.pp_necessities:
+            if prereq.id in id_map:
+                # Edge goes from the prerequisite to the strategy that requires it
+                dot.edge(prereq.id, meta.strategy_id,
+                         label=f"{edge_counter}: PP-nec",
+                         style='solid', color='black')
+                edge_counter += 1
+
+        # 2. Add LX-relation edges (resultant relations)
+        # These are emergent from the PP-Nec/PP-Suff/PV-Suff structure
         for lx_rel in meta.lx_relations:
-            target_id = lx_rel['elaborates_strategy_id'] # Adjusted for dict access
+            target_id = lx_rel['elaborates_strategy_id']
             if target_id in id_map:
-                # Edge goes from the elaborated (target) to the elaborating (meta) strategy
-                # Use the explanation as a tooltip for detailed visualization
-                dot.edge(target_id, meta.strategy_id, label="LX (VV-Res)", color='purple', style='bold', tooltip=lx_rel['explicit_principle'])
+                # The resultant arrow shows that meta.strategy_id makes explicit what is in target_id
+                # This is a VV-Resultant relation, shown as a dashed gray arrow
+                dot.edge(target_id, meta.strategy_id,
+                         label=f"Res_{edge_counter}: LX for",
+                         style='dashed', color='gray',
+                         tooltip=_wrap_label(f"Makes explicit the principle: {lx_rel['explicit_principle']}", 40))
+                edge_counter += 1
 
     return dot
