@@ -38,7 +38,10 @@ class EPLE:
 
         # Step 1: Analyze automata
         print("\n🔬 Phase 1: Analyzing Automata for Computational Patterns")
-        analyzer = AutomatonAnalyzer("src/automata")
+        # Get the directory of the main.py script
+        script_dir = os.path.dirname(os.path.realpath(__file__))
+        automata_path = os.path.join(script_dir, "src/automata")
+        analyzer = AutomatonAnalyzer(automata_path)
         self.analysis_results = analyzer.analyze_all_automata()
 
         # Step 2: Generate MUD diagrams
@@ -242,8 +245,7 @@ class EPLE:
             # Load mud_diagrams from the dedicated file if it exists
             if os.path.exists(mud_file):
                 with open(mud_file, 'r') as f:
-                    mud_data = json.load(f)
-                self.mud_diagrams = mud_data.get('mud_diagrams', {})
+                    self.mud_diagrams = json.load(f)
             else:
                 self.mud_diagrams = data.get('mud_diagrams', {})
             
