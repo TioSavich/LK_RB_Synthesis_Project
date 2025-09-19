@@ -1,0 +1,212 @@
+{
+  "patterns": {
+    "incremental_counting": {
+      "type": "counting",
+      "strategies_using": [
+        "ADD_COBO",
+        "ADD_Chunking",
+        "ADD_Counting",
+        "SMR_MULT_C2C",
+        "COBO"
+      ],
+      "usage_count": 5
+    },
+    "base_decomposition": {
+      "type": "decomposition",
+      "strategies_using": [
+        "ADD_Rounding",
+        "SMR_DIV_CGOB",
+        "SMR_DIV_DealingByOnes",
+        "SUB_Rounding"
+      ],
+      "usage_count": 4
+    }
+  },
+  "elaborations": [
+    {
+      "base_strategy": "ADD_Chunking",
+      "elaborated_strategy": "ADD_Counting",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "intra_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Chunking",
+      "elaborated_strategy": "ADD_COBO",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "intra_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Chunking",
+      "elaborated_strategy": "COBO",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Chunking",
+      "elaborated_strategy": "SMR_MULT_C2C",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Rounding",
+      "elaborated_strategy": "SUB_Rounding",
+      "shared_patterns": [
+        "base_decomposition"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Rounding",
+      "elaborated_strategy": "SMR_DIV_DealingByOnes",
+      "shared_patterns": [
+        "base_decomposition"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Rounding",
+      "elaborated_strategy": "SMR_DIV_CGOB",
+      "shared_patterns": [
+        "base_decomposition"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Counting",
+      "elaborated_strategy": "ADD_COBO",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "intra_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Counting",
+      "elaborated_strategy": "COBO",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_Counting",
+      "elaborated_strategy": "SMR_MULT_C2C",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_COBO",
+      "elaborated_strategy": "COBO",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "ADD_COBO",
+      "elaborated_strategy": "SMR_MULT_C2C",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "SUB_Rounding",
+      "elaborated_strategy": "SMR_DIV_DealingByOnes",
+      "shared_patterns": [
+        "base_decomposition"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "SUB_Rounding",
+      "elaborated_strategy": "SMR_DIV_CGOB",
+      "shared_patterns": [
+        "base_decomposition"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "COBO",
+      "elaborated_strategy": "SMR_MULT_C2C",
+      "shared_patterns": [
+        "incremental_counting"
+      ],
+      "type": "inter_categorial",
+      "confidence": 1.0
+    },
+    {
+      "base_strategy": "SMR_DIV_DealingByOnes",
+      "elaborated_strategy": "SMR_DIV_CGOB",
+      "shared_patterns": [
+        "base_decomposition"
+      ],
+      "type": "intra_categorial",
+      "confidence": 1.0
+    }
+  ],
+  "strategy_patterns": {
+    "ADD_Chunking": [
+      "incremental_counting"
+    ],
+    "ADD_Rounding": [
+      "base_decomposition"
+    ],
+    "ADD_RMB": [],
+    "ADD_Counting": [
+      "incremental_counting"
+    ],
+    "CBBO": [],
+    "ADD_COBO": [
+      "incremental_counting"
+    ],
+    "SUB_Rounding": [
+      "base_decomposition"
+    ],
+    "SUB_Sliding": [],
+    "COBO": [
+      "incremental_counting"
+    ],
+    "ChunkingA": [],
+    "SUB_Decomposition": [],
+    "ChunkingB": [],
+    "ChunkingC": [],
+    "SMR_MULT_CBO": [],
+    "SMR_MULT_C2C": [
+      "incremental_counting"
+    ],
+    "SMR_MULT_Commutative_Reasoning": [],
+    "SMR_MULT_DR": [],
+    "SMR_DIV_DealingByOnes": [
+      "base_decomposition"
+    ],
+    "SMR_DIV_IDR": [],
+    "SMR_DIV_CGOB": [
+      "base_decomposition"
+    ],
+    "SMR_DIV_UCR": []
+  }
+}
