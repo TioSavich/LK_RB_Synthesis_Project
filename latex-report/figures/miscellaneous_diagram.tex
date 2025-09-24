@@ -1,0 +1,26 @@
+\begin{tikzpicture}[
+  % Node Styles
+  vnode/.style={ellipse, draw, fill=lightgray!50, text=black, minimum height=1.3cm, minimum width=2.8cm, align=center},
+  pnode/.style={rectangle, rounded corners=5pt, draw, fill=gray!70, text=black, minimum height=1.3cm, minimum width=3.5cm, align=center, inner xsep=0.3cm, inner ysep=0.2cm},
+  graybox/.style={rectangle, fill=lightgray!50, inner sep=4pt, minimum height=1.1cm, anchor=center, align=center, text centered},
+  % Arrow Styles
+  solidarrow/.style={-Stealth, thick},
+  dashedarrow/.style={dashed, -Stealth, thick, gray},
+  textarrow/.style={align=center, inner sep=1pt}
+]
+\tikzset{font=\linespread{0.8}\selectfont}
+
+% Diagram for: miscellaneous
+
+\node[pnode] (P_0) at (0.00,5.00) {P\textsubscript{COBO}};
+\node[pnode] (P_1) at (4.76,1.55) {P\textsubscript{SMR\_MULT\_C2C}};
+\node[pnode] (P_2) at (2.94,-4.05) {P\textsubscript{SUB\_Rounding}};
+\node[pnode] (P_3) at (-2.94,-4.05) {P\textsubscript{SMR\_DIV\_DealingByOnes}};
+\node[pnode] (P_4) at (-4.76,1.55) {P\textsubscript{SMR\_DIV\_CGOB}};
+
+\draw[solidarrow] (P_0) -- node[graybox, midway, sloped] {P\textsubscript{AlgEl} 1: PP-suff \\ (incremental\_counting)} (P_1);
+\draw[solidarrow] (P_2) -- node[graybox, midway, sloped] {P\textsubscript{AlgEl} 2: PP-suff \\ (base\_decomposition)} (P_4);
+\draw[solidarrow] (P_2) -- node[graybox, midway, sloped] {P\textsubscript{AlgEl} 3: PP-suff \\ (base\_decomposition)} (P_3);
+\draw[solidarrow] (P_4) -- node[graybox, midway, sloped] {P\textsubscript{AlgEl} 4: PP-suff \\ (base\_decomposition)} (P_3);
+
+\end{tikzpicture}
