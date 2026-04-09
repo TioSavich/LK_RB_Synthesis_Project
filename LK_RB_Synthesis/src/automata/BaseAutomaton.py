@@ -55,6 +55,10 @@ class BaseAutomaton(ABC):
         while self.state not in ['q_accept', 'q_error']:
             executor = getattr(self, f"execute_{self.state}", self.execute_error)
             executor()
+        # Run the terminal-state handler once so strategies that set
+        # self.Result inside execute_q_accept actually get a chance to.
+        if self.state == 'q_accept':
+            self.execute_q_accept()
         return self.Result
 
     @abstractmethod
